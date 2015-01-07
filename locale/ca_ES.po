@@ -12,19 +12,19 @@ msgstr "Empresa"
 
 msgctxt "field:account.journal.invoice.sequence,create_date:"
 msgid "Create Date"
-msgstr "Data de creació"
+msgstr "Data creació"
 
 msgctxt "field:account.journal.invoice.sequence,create_uid:"
 msgid "Create User"
-msgstr "Usuari de creació"
+msgstr "Usuari creació"
 
 msgctxt "field:account.journal.invoice.sequence,fiscalyear:"
 msgid "Fiscalyear"
-msgstr "Any fiscal"
+msgstr "Exercici fiscal"
 
 msgctxt "field:account.journal.invoice.sequence,id:"
 msgid "ID"
-msgstr "Identificador"
+msgstr "ID"
 
 msgctxt "field:account.journal.invoice.sequence,journal:"
 msgid "Journal"
@@ -32,7 +32,7 @@ msgstr "Diari"
 
 msgctxt "field:account.journal.invoice.sequence,out_credit_note_sequence:"
 msgid "Customer Credit Note Sequence"
-msgstr "Seqüència d'abonament de client"
+msgstr "Seqüència de factura d'abonament de client"
 
 msgctxt "field:account.journal.invoice.sequence,out_invoice_sequence:"
 msgid "Customer Invoice Sequence"
