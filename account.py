@@ -111,13 +111,13 @@ class Journal:
         date = invoice.invoice_date or Date.today()
         for sequence in self.sequences:
             period = sequence.period
-            if period and (period.start_date < date and
-                    period.end_date > date):
+            if period and (period.start_date <= date and
+                    period.end_date >= date):
                 return getattr(sequence, invoice.type + '_sequence')
         for sequence in self.sequences:
             fiscalyear = sequence.fiscalyear
-            if (fiscalyear.start_date < date and
-                    fiscalyear.end_date > date):
+            if (fiscalyear.start_date <= date and
+                    fiscalyear.end_date >= date):
                 return getattr(sequence, invoice.type + '_sequence')
 
 
