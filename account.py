@@ -16,7 +16,9 @@ class AccountJournalInvoiceSequence(ModelSQL, ModelView):
     __name__ = 'account.journal.invoice.sequence'
     journal = fields.Many2One('account.journal', 'Journal', required=True)
     fiscalyear = fields.Many2One('account.fiscalyear', 'Fiscalyear',
-        required=True)
+        required=True, domain=[
+            ('company', '=', Eval('company', -1)),
+            ], depends=['company'])
     period = fields.Many2One('account.period', 'Period',
         domain=[
             ('fiscalyear', '=', Eval('fiscalyear'))
@@ -26,7 +28,7 @@ class AccountJournalInvoiceSequence(ModelSQL, ModelView):
             ('id', If(Eval('context', {}).contains('company'), '=', '!='),
                 Eval('context', {}).get('company', -1)),
             ], select=True)
-    type = fields.Function(fields.Char('Type'), 'get_type')
+    type = fields.Function(fields.Char('Type'), 'on_change_with_type')
     out_invoice_sequence = fields.Many2One('ir.sequence.strict',
         'Customer Invoice Sequence',
         states={
@@ -34,6 +36,7 @@ class AccountJournalInvoiceSequence(ModelSQL, ModelView):
             'invisible': Eval('type') != 'revenue',
             },
         domain=[
+            ('code', '=', 'account.invoice'),
             ['OR',
                 ('company', '=', Eval('company')),
                 ('company', '=', None),
@@ -47,6 +50,7 @@ class AccountJournalInvoiceSequence(ModelSQL, ModelView):
             'invisible': Eval('type') != 'revenue',
             },
         domain=[
+            ('code', '=', 'account.invoice'),
             ['OR',
                 ('company', '=', Eval('company')),
                 ('company', '=', None),
@@ -60,6 +64,7 @@ class AccountJournalInvoiceSequence(ModelSQL, ModelView):
             'invisible': Eval('type') != 'expense',
             },
         domain=[
+            ('code', '=', 'account.invoice'),
             ['OR',
                 ('company', '=', Eval('company')),
                 ('company', '=', None),
@@ -73,6 +78,7 @@ class AccountJournalInvoiceSequence(ModelSQL, ModelView):
             'invisible': Eval('type') != 'expense',
             },
         domain=[
+            ('code', '=', 'account.invoice'),
             ['OR',
                 ('company', '=', Eval('company')),
                 ('company', '=', None),
@@ -88,14 +94,14 @@ class AccountJournalInvoiceSequence(ModelSQL, ModelView):
                 'Period can be used only once per Journal Sequence.'),
         ]
 
-    def get_type(self, name):
-        return self.journal.type
+    @staticmethod
+    def default_company():
+        return Transaction().context.get('company')
 
     @fields.depends('journal')
-    def on_change_journal(self):
-        return {
-            'type': self.journal.type,
-            }
+    def on_change_with_type(self, name=None):
+        if self.journal:
+            return self.journal.type
 
 
 class Journal:
@@ -123,16 +129,8 @@ class Journal:
 
 class FiscalYear:
     __name__ = 'account.fiscalyear'
-    journal_sequences = fields.Function(fields.One2Many('ir.sequence.strict',
-            None, 'Journal Sequences'), 'get_journal_sequences')
-
-    def get_journal_sequences(self, name):
-        pool = Pool()
-        InvoiceSequences = pool.get('account.journal.invoice.sequence')
-        sequences = InvoiceSequences.search([('fiscalyear', '=', self.id)])
-        result = [s.out_invoice_sequence.id for s in sequences]
-        result.extend([s.out_credit_note_sequence.id for s in sequences])
-        return result
+    journal_sequences = fields.One2Many('account.journal.invoice.sequence',
+        'fiscalyear', 'Journal Sequences')
 
 
 class Invoice:

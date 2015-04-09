@@ -5,6 +5,8 @@ copyright notices and license terms. -->
 <form string="Account Invoice Sequence">
     <label name="company"/>
     <field name="company"/>
+    <label name="journal"/>
+    <field name="journal"/>
     <newline/>
     <label name="fiscalyear"/>
     <field name="fiscalyear"/>
@@ -18,6 +20,4 @@ copyright notices and license terms. -->
     <field name="in_invoice_sequence"/>
     <label name="in_credit_note_sequence"/>
     <field name="in_credit_note_sequence"/>
-    <label name="journal"/>
-    <field name="journal"/>
 </form>
