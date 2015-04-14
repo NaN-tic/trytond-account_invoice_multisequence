@@ -152,6 +152,9 @@ class Invoice:
             with Transaction().set_context(
                     date=self.invoice_date or Date.today()):
                 self.number = Sequence.get_id(sequence.id)
+                if (not self.invoice_date
+                        and self.type in ('out_invoice', 'out_credit_note')):
+                    self.invoice_date = Transaction().context['date']
                 self.save()
 
         return super(Invoice, self).set_number()
