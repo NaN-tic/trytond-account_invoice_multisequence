@@ -126,6 +126,13 @@ class Journal:
                     fiscalyear.end_date >= date):
                 return getattr(sequence, invoice.type + '_sequence')
 
+    @classmethod
+    def view_attributes(cls):
+        return [('/form/notebook/page[@id="sequences"]', 'states', {
+                    'invisible': Not(In(Eval('type'), ['revenue', 'expense'])),
+                    }),
+                ]
+
 
 class FiscalYear:
     __name__ = 'account.fiscalyear'
