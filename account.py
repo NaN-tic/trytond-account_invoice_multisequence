@@ -128,13 +128,10 @@ class Journal:
 
     @classmethod
     def view_attributes(cls):
-        attributes = super(Journal, cls).view_attributes()
-        attributes.append(
-            ('/form/notebook/page[@id="sequences"]', 'states', {
+        return super(Journal, cls).view_attributes() + [
+            ('//page[@id="sequences"]', 'states', {
                     'invisible': Not(In(Eval('type'), ['revenue', 'expense'])),
-                    })
-                )
-        return attributes
+                    })]
 
 
 class FiscalYear:
