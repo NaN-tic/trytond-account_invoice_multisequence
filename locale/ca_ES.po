@@ -82,7 +82,6 @@ msgctxt "view:account.journal.invoice.sequence:"
 msgid "Account Invoice Sequence"
 msgstr "Seqüència de factura"
 
-#, fuzzy
 msgctxt "view:account.journal:"
 msgid "Sequences"
 msgstr "Seqüències"
