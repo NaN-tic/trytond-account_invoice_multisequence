@@ -1,7 +1,7 @@
 # This file is part of the account_invoice_multisequence module for Tryton.
 # The COPYRIGHT file at the top level of this repository contains the full
 # copyright notices and license terms.
-from trytond.model import ModelView, ModelSQL, fields
+from trytond.model import ModelView, ModelSQL, fields, Unique
 from trytond.pool import Pool, PoolMeta
 from trytond.pyson import Eval, If, In, Not
 from trytond.transaction import Transaction
@@ -89,8 +89,9 @@ class AccountJournalInvoiceSequence(ModelSQL, ModelView):
     @classmethod
     def __setup__(cls):
         super(AccountJournalInvoiceSequence, cls).__setup__()
+        t = cls.__table__()
         cls._sql_constraints += [
-            ('period_uniq', 'UNIQUE(journal, period)',
+            ('period_uniq', Unique(t, t.journal, t.period),
                 'Period can be used only once per Journal Sequence.'),
         ]
 
