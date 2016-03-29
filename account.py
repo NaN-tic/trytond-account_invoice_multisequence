@@ -8,7 +8,6 @@ from trytond.transaction import Transaction
 
 
 __all__ = ['AccountJournalInvoiceSequence', 'Journal', 'FiscalYear', 'Invoice']
-__metaclass__ = PoolMeta
 
 
 class AccountJournalInvoiceSequence(ModelSQL, ModelView):
@@ -106,6 +105,7 @@ class AccountJournalInvoiceSequence(ModelSQL, ModelView):
 
 
 class Journal:
+    __metaclass__ = PoolMeta
     __name__ = 'account.journal'
     sequences = fields.One2Many('account.journal.invoice.sequence', 'journal',
         'Sequences', states={
@@ -136,12 +136,14 @@ class Journal:
 
 
 class FiscalYear:
+    __metaclass__ = PoolMeta
     __name__ = 'account.fiscalyear'
     journal_sequences = fields.One2Many('account.journal.invoice.sequence',
         'fiscalyear', 'Journal Sequences')
 
 
 class Invoice:
+    __metaclass__ = PoolMeta
     __name__ = 'account.invoice'
 
     def set_number(self):
