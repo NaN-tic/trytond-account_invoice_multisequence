@@ -42,36 +42,8 @@ class AccountJournalInvoiceSequence(ModelSQL, ModelView):
                 ]
             ],
         depends=['company', 'type'])
-    out_credit_note_sequence = fields.Many2One('ir.sequence.strict',
-        'Customer Credit Note Sequence',
-        states={
-            'required': Eval('type') == 'revenue',
-            'invisible': Eval('type') != 'revenue',
-            },
-        domain=[
-            ('code', '=', 'account.invoice'),
-            ['OR',
-                ('company', '=', Eval('company')),
-                ('company', '=', None),
-                ]
-            ],
-        depends=['company', 'type'])
     in_invoice_sequence = fields.Many2One('ir.sequence.strict',
         'Supplier Invoice Sequence',
-        states={
-            'required': Eval('type') == 'expense',
-            'invisible': Eval('type') != 'expense',
-            },
-        domain=[
-            ('code', '=', 'account.invoice'),
-            ['OR',
-                ('company', '=', Eval('company')),
-                ('company', '=', None),
-                ]
-            ],
-        depends=['company', 'type'])
-    in_credit_note_sequence = fields.Many2One('ir.sequence.strict',
-        'Supplier Credit Note Sequence',
         states={
             'required': Eval('type') == 'expense',
             'invisible': Eval('type') != 'expense',
@@ -120,12 +92,12 @@ class Journal:
             period = sequence.period
             if period and (period.start_date <= date and
                     period.end_date >= date):
-                return getattr(sequence, invoice.type + '_sequence')
+                return getattr(sequence, invoice.type + '_invoice_sequence')
         for sequence in self.sequences:
             fiscalyear = sequence.fiscalyear
             if (fiscalyear.start_date <= date and
                     fiscalyear.end_date >= date):
-                return getattr(sequence, invoice.type + '_sequence')
+                return getattr(sequence, invoice.type + '_invoice_sequence')
 
     @classmethod
     def view_attributes(cls):

@@ -4,8 +4,8 @@ The COPYRIGHT file at the top level of this repository contains the full
 copyright notices and license terms. -->
 <data>
     <xpath
-        expr="/form/notebook/page[@id='sequences']/field[@name='in_credit_note_sequence']"
-        position="after">
+        expr="/form/notebook/page[@id='sequences']"
+        position="inside">
         <newline/>
         <field name="journal_sequences" colspan="4"/>
     </xpath>
