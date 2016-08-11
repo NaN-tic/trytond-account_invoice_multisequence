@@ -118,7 +118,8 @@ class Invoice:
     __metaclass__ = PoolMeta
     __name__ = 'account.invoice'
 
-    def set_number(self):
+    @classmethod
+    def set_number(cls, invoices):
         '''
         Set number to the invoice
         '''
@@ -126,16 +127,17 @@ class Invoice:
         Sequence = pool.get('ir.sequence.strict')
         Date = pool.get('ir.date')
 
-        if self.number:
-            return
+        for invoice in invoices:
+            if invoice.number:
+                continue
+            sequence = invoice.journal.get_invoice_sequence(invoice)
+            if sequence:
+                with Transaction().set_context(
+                        date=invoice.invoice_date or Date.today()):
+                    number = Sequence.get_id(sequence.id)
+                    invoice.number = number
+                    if not invoice.invoice_date and invoice.type == 'out':
+                        invoice.invoice_date = Transaction().context['date']
+        cls.save(invoices)
+        return super(Invoice, cls).set_number(invoices)
 
-        sequence = self.journal.get_invoice_sequence(self)
-        if sequence:
-            with Transaction().set_context(
-                    date=self.invoice_date or Date.today()):
-                self.number = Sequence.get_id(sequence.id)
-                if not self.invoice_date and self.type == 'out':
-                    self.invoice_date = Transaction().context['date']
-                self.save()
-
-        return super(Invoice, self).set_number()
