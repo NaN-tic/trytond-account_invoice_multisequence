@@ -20,11 +20,11 @@ msgstr "Empresa"
 
 msgctxt "field:account.journal.invoice.sequence,create_date:"
 msgid "Create Date"
-msgstr "Fecha creación"
+msgstr "Fecha de creación"
 
 msgctxt "field:account.journal.invoice.sequence,create_uid:"
 msgid "Create User"
-msgstr "Usuario creación"
+msgstr "Usuario de creación"
 
 msgctxt "field:account.journal.invoice.sequence,fiscalyear:"
 msgid "Fiscalyear"
@@ -60,11 +60,11 @@ msgstr "Tipo"
 
 msgctxt "field:account.journal.invoice.sequence,write_date:"
 msgid "Write Date"
-msgstr "Fecha modificación"
+msgstr "Fecha de modificación"
 
 msgctxt "field:account.journal.invoice.sequence,write_uid:"
 msgid "Write User"
-msgstr "Usuario modificación"
+msgstr "Usuario de modificación"
 
 msgctxt "model:account.journal.invoice.sequence,name:"
 msgid "Account Journal Invoice Sequence"
