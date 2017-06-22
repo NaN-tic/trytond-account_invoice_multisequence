@@ -1,6 +1,7 @@
 # This file is part of the account_invoice_multisequence module for Tryton.
 # The COPYRIGHT file at the top level of this repository contains the full
 # copyright notices and license terms.
+from decimal import Decimal
 from trytond.model import ModelView, ModelSQL, fields, Unique
 from trytond.pool import Pool, PoolMeta
 from trytond.pyson import Eval, If, In, Not
@@ -8,6 +9,7 @@ from trytond.transaction import Transaction
 
 
 __all__ = ['AccountJournalInvoiceSequence', 'Journal', 'FiscalYear', 'Invoice']
+_ZERO = Decimal('0.0')
 
 
 class AccountJournalInvoiceSequence(ModelSQL, ModelView):
@@ -42,8 +44,36 @@ class AccountJournalInvoiceSequence(ModelSQL, ModelView):
                 ]
             ],
         depends=['company', 'type'])
+    out_credit_note_sequence = fields.Many2One('ir.sequence.strict',
+        'Customer Credit Note Sequence',
+        states={
+            'required': Eval('type') == 'revenue',
+            'invisible': Eval('type') != 'revenue',
+            },
+        domain=[
+            ('code', '=', 'account.invoice'),
+            ['OR',
+                ('company', '=', Eval('company')),
+                ('company', '=', None),
+                ]
+            ],
+        depends=['company', 'type'])
     in_invoice_sequence = fields.Many2One('ir.sequence.strict',
         'Supplier Invoice Sequence',
+        states={
+            'required': Eval('type') == 'expense',
+            'invisible': Eval('type') != 'expense',
+            },
+        domain=[
+            ('code', '=', 'account.invoice'),
+            ['OR',
+                ('company', '=', Eval('company')),
+                ('company', '=', None),
+                ]
+            ],
+        depends=['company', 'type'])
+    in_credit_note_sequence = fields.Many2One('ir.sequence.strict',
+        'Supplier Credit Note Sequence',
         states={
             'required': Eval('type') == 'expense',
             'invisible': Eval('type') != 'expense',
@@ -88,16 +118,27 @@ class Journal:
         pool = Pool()
         Date = pool.get('ir.date')
         date = invoice.invoice_date or Date.today()
+
         for sequence in self.sequences:
             period = sequence.period
             if period and (period.start_date <= date and
                     period.end_date >= date):
-                return getattr(sequence, invoice.type + '_invoice_sequence')
+                if invoice.untaxed_amount >= _ZERO:
+                    return getattr(
+                        sequence, invoice.type + '_invoice_sequence')
+                else:
+                    return getattr(
+                        sequence, invoice.type + '_credit_note_sequence')
         for sequence in self.sequences:
             fiscalyear = sequence.fiscalyear
             if (fiscalyear.start_date <= date and
                     fiscalyear.end_date >= date):
-                return getattr(sequence, invoice.type + '_invoice_sequence')
+                if invoice.untaxed_amount >= _ZERO:
+                    return getattr(
+                        sequence, invoice.type + '_invoice_sequence')
+                else:
+                    return getattr(
+                        sequence, invoice.type + '_credit_note_sequence')
 
     @classmethod
     def view_attributes(cls):

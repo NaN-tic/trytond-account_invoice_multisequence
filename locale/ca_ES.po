@@ -42,6 +42,10 @@ msgctxt "field:account.journal.invoice.sequence,journal:"
 msgid "Journal"
 msgstr "Diari"
 
+msgctxt "field:account.journal.invoice.sequence,out_credit_note_sequence:"
+msgid "Customer Credit Note Sequence"
+msgstr "Seqüència de factura d'abonament de client"
+
 msgctxt "field:account.journal.invoice.sequence,out_invoice_sequence:"
 msgid "Customer Invoice Sequence"
 msgstr "Seqüència de factura de client"

@@ -1,4 +1,4 @@
-# 
+#
 msgid ""
 msgstr "Content-Type: text/plain; charset=utf-8\n"
 
@@ -34,6 +34,10 @@ msgctxt "field:account.journal.invoice.sequence,id:"
 msgid "ID"
 msgstr "ID"
 
+msgctxt "field:account.journal.invoice.sequence,in_credit_note_sequence:"
+msgid "Supplier Credit Note Sequence"
+msgstr "Secuencia de factura de abono de proveedor"
+
 msgctxt "field:account.journal.invoice.sequence,in_invoice_sequence:"
 msgid "Supplier Invoice Sequence"
 msgstr "Secuencia de factura de proveedor"
@@ -41,6 +45,10 @@ msgstr "Secuencia de factura de proveedor"
 msgctxt "field:account.journal.invoice.sequence,journal:"
 msgid "Journal"
 msgstr "Diario"
+
+msgctxt "field:account.journal.invoice.sequence,out_credit_note_sequence:"
+msgid "Customer Credit Note Sequence"
+msgstr "Secuencia de factura de abono de cliente"
 
 msgctxt "field:account.journal.invoice.sequence,out_invoice_sequence:"
 msgid "Customer Invoice Sequence"
