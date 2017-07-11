@@ -1,4 +1,4 @@
-# 
+#
 msgid ""
 msgstr "Content-Type: text/plain; charset=utf-8\n"
 
@@ -9,10 +9,6 @@ msgstr "El período sólo se puede usar una vez en las secuencias de diario."
 msgctxt "field:account.fiscalyear,journal_sequences:"
 msgid "Journal Sequences"
 msgstr "Secuencias de diario"
-
-msgctxt "field:account.journal,sequences:"
-msgid "Sequences"
-msgstr "Secuencias"
 
 msgctxt "field:account.journal.invoice.sequence,company:"
 msgid "Company"
@@ -73,7 +69,3 @@ msgstr "Secuencia de factura según diario"
 msgctxt "view:account.journal.invoice.sequence:"
 msgid "Account Invoice Sequence"
 msgstr "Secuencia de factura"
-
-msgctxt "view:account.journal:"
-msgid "Sequences"
-msgstr "Secuencias"

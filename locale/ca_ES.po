@@ -10,10 +10,6 @@ msgctxt "field:account.fiscalyear,journal_sequences:"
 msgid "Journal Sequences"
 msgstr "Seqüències de diari"
 
-msgctxt "field:account.journal,sequences:"
-msgid "Sequences"
-msgstr "Seqüències"
-
 msgctxt "field:account.journal.invoice.sequence,company:"
 msgid "Company"
 msgstr "Empresa"
@@ -73,7 +69,3 @@ msgstr "Seqüència de factura segons diari"
 msgctxt "view:account.journal.invoice.sequence:"
 msgid "Account Invoice Sequence"
 msgstr "Seqüència de factura"
-
-msgctxt "view:account.journal:"
-msgid "Sequences"
-msgstr "Seqüències"
