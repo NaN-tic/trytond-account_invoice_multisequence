@@ -109,10 +109,6 @@ class AccountJournalInvoiceSequence(ModelSQL, ModelView):
 class Journal:
     __metaclass__ = PoolMeta
     __name__ = 'account.journal'
-    sequences = fields.One2Many('account.journal.invoice.sequence', 'journal',
-        'Sequences', states={
-            'invisible': Not(In(Eval('type'), ['revenue', 'expense'])),
-            })
 
     def get_invoice_sequence(self, invoice):
         pool = Pool()
