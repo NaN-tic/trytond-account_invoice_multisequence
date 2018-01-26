@@ -14,6 +14,10 @@ copyright notices and license terms. -->
     <field name="period"/>
     <label name="out_invoice_sequence"/>
     <field name="out_invoice_sequence"/>
+    <label name="out_credit_note_sequence"/>
+    <field name="out_credit_note_sequence"/>
     <label name="in_invoice_sequence"/>
     <field name="in_invoice_sequence"/>
+    <label name="in_credit_note_sequence"/>
+    <field name="in_credit_note_sequence"/>
 </form>
