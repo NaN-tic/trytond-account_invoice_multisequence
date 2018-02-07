@@ -1,7 +1,5 @@
 #!/usr/bin/env python
-# This file is part account_invoice_multisequence module for Tryton.
-# The COPYRIGHT file at the top level of this repository contains
-# the full copyright notices and license terms.
+# encoding: utf-8
 
 from setuptools import setup
 import re
@@ -58,13 +56,11 @@ if minor_version % 2:
 
 setup(name='%s_%s' % (PREFIX, MODULE),
     version=version,
-    description='Tryton account_invoice_multisequence Module',
+    description='Tryton Account Invoice Multisequence Module',
     long_description=read('README'),
-    author='TrytonSpain',
-    author_email='info@trytonspain.com',
-    url='https://bitbucket.org/trytonspain/',
+    author='NaN-tic',
+    url='http://www.nan-tic.com/',
     download_url="https://bitbucket.org/trytonspain/trytond-%s" % MODULE,
-    keywords='',
     package_dir={'trytond.modules.%s' % MODULE: '.'},
     packages=[
         'trytond.modules.%s' % MODULE,
@@ -72,8 +68,7 @@ setup(name='%s_%s' % (PREFIX, MODULE),
         ],
     package_data={
         'trytond.modules.%s' % MODULE: (info.get('xml', [])
-            + ['tryton.cfg', 'view/*.xml', 'locale/*.po', '*.odt',
-                'icons/*.svg', 'tests/*.rst']),
+            + ['tryton.cfg', 'view/*.xml', 'locale/*.po', 'tests/*.rst']),
         },
     classifiers=[
         'Development Status :: 5 - Production/Stable',
@@ -83,18 +78,8 @@ setup(name='%s_%s' % (PREFIX, MODULE),
         'Intended Audience :: Financial and Insurance Industry',
         'Intended Audience :: Legal Industry',
         'License :: OSI Approved :: GNU General Public License (GPL)',
-        'Natural Language :: Bulgarian',
         'Natural Language :: Catalan',
-        'Natural Language :: Czech',
-        'Natural Language :: Dutch',
         'Natural Language :: English',
-        'Natural Language :: French',
-        'Natural Language :: German',
-        'Natural Language :: Hungarian',
-        'Natural Language :: Italian',
-        'Natural Language :: Portuguese (Brazilian)',
-        'Natural Language :: Russian',
-        'Natural Language :: Slovenian',
         'Natural Language :: Spanish',
         'Operating System :: OS Independent',
         'Programming Language :: Python :: 2.7',
@@ -118,6 +103,6 @@ setup(name='%s_%s' % (PREFIX, MODULE),
     tests_require=tests_require,
     use_2to3=True,
     convert_2to3_doctests=[
-        'tests/scenario_account_invoice.rst',
-        ],
+        'tests/scenario_invoice.rst',
+        ]
     )
