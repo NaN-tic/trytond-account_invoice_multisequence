@@ -106,8 +106,7 @@ class AccountJournalInvoiceSequence(ModelSQL, ModelView):
             return self.journal.type
 
 
-class Journal:
-    __metaclass__ = PoolMeta
+class Journal(metaclass=PoolMeta):
     __name__ = 'account.journal'
 
     def get_invoice_sequence(self, invoice):
@@ -150,15 +149,13 @@ class Journal:
                     })]
 
 
-class FiscalYear:
-    __metaclass__ = PoolMeta
+class FiscalYear(metaclass=PoolMeta):
     __name__ = 'account.fiscalyear'
     journal_sequences = fields.One2Many('account.journal.invoice.sequence',
         'fiscalyear', 'Journal Sequences')
 
 
-class Invoice:
-    __metaclass__ = PoolMeta
+class Invoice(metaclass=PoolMeta):
     __name__ = 'account.invoice'
 
     @classmethod

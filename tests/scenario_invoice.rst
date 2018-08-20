@@ -143,7 +143,7 @@ Create invoice on revenue journal::
     >>> line.unit_price = Decimal('40')
     >>> invoice.click('post')
     >>> invoice.number
-    u'1'
+    '1'
 
 Create credit_note on revenue journal::
 
@@ -158,7 +158,7 @@ Create credit_note on revenue journal::
     >>> line.unit_price = Decimal('40')
     >>> invoice.click('post')
     >>> invoice.number
-    u'2'
+    '2'
 
 Create invoice on custom journal::
 
@@ -174,7 +174,7 @@ Create invoice on custom journal::
     >>> line.unit_price = Decimal('40')
     >>> invoice.click('post')
     >>> invoice.number
-    u'1'
+    '1'
 
 Create credit_note on custom journal::
 
@@ -190,7 +190,7 @@ Create credit_note on custom journal::
     >>> line.unit_price = Decimal('40')
     >>> invoice.click('post')
     >>> invoice.number
-    u'C1'
+    'C1'
 
 Create invoice IN on custom journal::
 
@@ -207,7 +207,7 @@ Create invoice IN on custom journal::
     >>> line.unit_price = Decimal('40')
     >>> invoice.click('post')
     >>> invoice.number
-    u'2'
+    '2'
 
 Create credit_note IN on custom journal::
 
@@ -224,4 +224,4 @@ Create credit_note IN on custom journal::
     >>> line.unit_price = Decimal('40')
     >>> invoice.click('post')
     >>> invoice.number
-    u'C2'
+    'C2'
