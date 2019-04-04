@@ -32,6 +32,7 @@ copyright notices and license terms. -->
             <field name="name">account_journal_invoice_sequence_list</field>
         </record>
         <record model="ir.rule.group" id="rule_group_account_journal_invoice_sequence">
+            <field name="name">Account Journal Invoice Sequence</field>
             <field name="model" search="[('model', '=', 'account.journal.invoice.sequence')]"/>
             <field name="global_p" eval="True"/>
         </record>
