@@ -2,6 +2,10 @@
 # encoding: utf-8
 
 from setuptools import setup
+import re#!/usr/bin/env python
+# encoding: utf-8
+
+from setuptools import setup
 import re
 import os
 import io
@@ -33,31 +37,45 @@ info = dict(config.items('tryton'))
 for key in ('depends', 'extras_depend', 'xml'):
     if key in info:
         info[key] = info[key].strip().splitlines()
+
 version = info.get('version', '0.0.1')
 major_version, minor_version, _ = version.split('.', 2)
 major_version = int(major_version)
 minor_version = int(minor_version)
 
 requires = []
+
 for dep in info.get('depends', []):
     if not re.match(r'(ir|res)(\W|$)', dep):
         prefix = MODULE2PREFIX.get(dep, 'trytond')
         requires.append(get_require_version('%s_%s' % (prefix, dep)))
 requires.append(get_require_version('trytond'))
+requires += [get_require_version('trytond_account'),get_require_version('trytond_account_invoice'),get_require_version('trytond_company')]
 
-tests_require = [get_require_version('proteus')]
+tests_require = [
+    get_require_version('proteus'),
+    
+    ]
+
+series = '%s.%s' % (major_version, minor_version)
+if minor_version % 2:
+    branch = 'master'
+else:
+    branch = series
+
 dependency_links = []
+
 if minor_version % 2:
     # Add development index for testing with proteus
     dependency_links.append('https://trydevpi.tryton.org/')
 
 setup(name='%s_%s' % (PREFIX, MODULE),
     version=version,
-    description='Tryton Account Invoice Multisequence Module',
+    description='',
     long_description=read('README'),
-    author='NaN-tic',
+    author='trytonspain',
     url='http://www.nan-tic.com/',
-    download_url="https://bitbucket.org/trytonspain/trytond-%s" % MODULE,
+    download_url='https://github.com:trytonspain/trytond-account_invoice_multisequence',
     package_dir={'trytond.modules.%s' % MODULE: '.'},
     packages=[
         'trytond.modules.%s' % MODULE,
@@ -65,7 +83,7 @@ setup(name='%s_%s' % (PREFIX, MODULE),
         ],
     package_data={
         'trytond.modules.%s' % MODULE: (info.get('xml', [])
-            + ['tryton.cfg', 'view/*.xml', 'locale/*.po', 'tests/*.rst']),
+            + ['tryton.cfg', 'locale/*.po', 'tests/*.rst', 'view/*.xml']),
         },
     classifiers=[
         'Development Status :: 5 - Production/Stable',
@@ -79,12 +97,8 @@ setup(name='%s_%s' % (PREFIX, MODULE),
         'Natural Language :: English',
         'Natural Language :: Spanish',
         'Operating System :: OS Independent',
-        'Programming Language :: Python :: 2.7',
-        'Programming Language :: Python :: 3.4',
-        'Programming Language :: Python :: 3.5',
         'Programming Language :: Python :: 3.6',
-        'Programming Language :: Python :: Implementation :: CPython',
-        'Programming Language :: Python :: Implementation :: PyPy',
+        'Programming Language :: Python :: 3.7',
         'Topic :: Office/Business',
         ],
     license='GPL-3',
@@ -98,8 +112,5 @@ setup(name='%s_%s' % (PREFIX, MODULE),
     test_suite='tests',
     test_loader='trytond.test_loader:Loader',
     tests_require=tests_require,
-    use_2to3=True,
-    convert_2to3_doctests=[
-        'tests/scenario_invoice.rst',
-        ]
+
     )
