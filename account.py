@@ -164,7 +164,6 @@ class Invoice(metaclass=PoolMeta):
         Set number to the invoice
         '''
         pool = Pool()
-        Sequence = pool.get('ir.sequence.strict')
         Date = pool.get('ir.date')
 
         for invoice in invoices:
@@ -174,7 +173,7 @@ class Invoice(metaclass=PoolMeta):
             if sequence:
                 with Transaction().set_context(
                         date=invoice.invoice_date or Date.today()):
-                    number = Sequence.get_id(sequence.id)
+                    number = sequence.get()
                     invoice.number = number
                     if not invoice.invoice_date and invoice.type == 'out':
                         invoice.invoice_date = Transaction().context['date']
