@@ -4,7 +4,7 @@
 from decimal import Decimal
 from trytond.model import ModelView, ModelSQL, fields, Unique
 from trytond.pool import Pool, PoolMeta
-from trytond.pyson import Eval, If, In, Not
+from trytond.pyson import Eval, If, In, Not, Id
 from trytond.transaction import Transaction
 
 _ZERO = Decimal('0.0')
@@ -35,7 +35,8 @@ class AccountJournalInvoiceSequence(ModelSQL, ModelView):
             'invisible': Eval('type') != 'revenue',
             },
         domain=[
-            ('code', '=', 'account.invoice'),
+            ('sequence_type', '=', Id('account_invoice',
+                    'sequence_type_account_invoice')),
             ['OR',
                 ('company', '=', Eval('company')),
                 ('company', '=', None),
@@ -49,7 +50,8 @@ class AccountJournalInvoiceSequence(ModelSQL, ModelView):
             'invisible': Eval('type') != 'revenue',
             },
         domain=[
-            ('code', '=', 'account.invoice'),
+            ('sequence_type', '=', Id('account_invoice',
+                    'sequence_type_account_invoice')),
             ['OR',
                 ('company', '=', Eval('company')),
                 ('company', '=', None),
@@ -63,7 +65,8 @@ class AccountJournalInvoiceSequence(ModelSQL, ModelView):
             'invisible': Eval('type') != 'expense',
             },
         domain=[
-            ('code', '=', 'account.invoice'),
+            ('sequence_type', '=', Id('account_invoice',
+                    'sequence_type_account_invoice')),
             ['OR',
                 ('company', '=', Eval('company')),
                 ('company', '=', None),
@@ -77,7 +80,8 @@ class AccountJournalInvoiceSequence(ModelSQL, ModelView):
             'invisible': Eval('type') != 'expense',
             },
         domain=[
-            ('code', '=', 'account.invoice'),
+            ('sequence_type', '=', Id('account_invoice',
+                    'sequence_type_account_invoice')),
             ['OR',
                 ('company', '=', Eval('company')),
                 ('company', '=', None),

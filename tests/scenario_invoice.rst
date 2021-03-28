@@ -55,14 +55,17 @@ Create new Journal with custom sequences::
     >>> AccountJournalInvoiceSequence = Model.get('account.journal.invoice.sequence')
     >>> SequenceStrict = Model.get('ir.sequence.strict')
     >>> Sequence = Model.get('ir.sequence')
+    >>> SequenceType = Model.get('ir.sequence.type')
 
-    >>> sequence_journal, = Sequence.find([('code', '=', 'account.journal')])
+    >>> sequence_journal, = Sequence.find([('sequence_type.name', '=', 'Account Journal')])
+    >>> sequence_type, = SequenceType.find([('name', '=', 'Invoice')])
     >>> invoice_seq = SequenceStrict(name=fiscalyear.name,
-    ...     code='account.invoice',
+    ...     sequence_type=sequence_type,
     ...     company=company)
     >>> invoice_seq.save()
+    >>> sequence_type, = SequenceType.find([('name', '=', 'Invoice')])
     >>> invoice_credit_seq = SequenceStrict(name=fiscalyear.name,
-    ...     code='account.invoice',
+    ...     sequence_type=sequence_type,
     ...     prefix='C',
     ...     company=company)
     >>> invoice_credit_seq.save()
