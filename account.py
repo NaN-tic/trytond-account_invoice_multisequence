@@ -167,17 +167,25 @@ class Invoice(metaclass=PoolMeta):
         Sequence = pool.get('ir.sequence.strict')
         Date = pool.get('ir.date')
 
+        # Obtain sequences first and then iterate to compute the number.
+        # The reason is that changing the context in each iteration causes the
+        # invoices cache to be cleared and so untaxed_amount (which is
+        # frequently computed in get_invoice_sequence) is computed in each
+        # iteration. For large invoices this can take a lot of time.
+        sequences = {}
         for invoice in invoices:
             if invoice.number:
                 continue
             sequence = invoice.journal.get_invoice_sequence(invoice)
-            if sequence:
-                with Transaction().set_context(
-                        date=invoice.invoice_date or Date.today()):
-                    number = Sequence.get_id(sequence.id)
-                    invoice.number = number
-                    if not invoice.invoice_date and invoice.type == 'out':
-                        invoice.invoice_date = Transaction().context['date']
+            sequences[invoice] = sequence
+
+        for invoice, sequence in sequences.items():
+            with Transaction().set_context(
+                    date=invoice.invoice_date or Date.today()):
+                number = Sequence.get_id(sequence.id)
+                invoice.number = number
+                if not invoice.invoice_date and invoice.type == 'out':
+                    invoice.invoice_date = Transaction().context['date']
         cls.save(invoices)
         return super(Invoice, cls).set_number(invoices)
 
