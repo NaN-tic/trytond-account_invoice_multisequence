@@ -177,7 +177,8 @@ class Invoice(metaclass=PoolMeta):
             if invoice.number:
                 continue
             sequence = invoice.journal.get_invoice_sequence(invoice)
-            sequences[invoice] = sequence
+            if sequence:
+                sequences[invoice] = sequence
 
         for invoice, sequence in sequences.items():
             with Transaction().set_context(
