@@ -37,9 +37,9 @@ copyright notices and license terms. -->
             <field name="global_p" eval="True"/>
         </record>
         <record model="ir.rule" id="rule_account_journal_invoice_sequence1">
-            <field name="domain"
-                eval="['OR', ('company', '=', Eval('user', {}).get('company', None)), ('company', '=', None)]"
-                pyson="1"/>
+          <field name="domain"
+              eval="[('company', 'in', Eval('companies', []))]"
+              pyson="1"/>
             <field name="rule_group" ref="rule_group_account_journal_invoice_sequence"/>
         </record>
 
