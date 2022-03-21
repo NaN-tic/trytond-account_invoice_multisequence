@@ -13,7 +13,11 @@ _ZERO = Decimal('0.0')
 class AccountJournalInvoiceSequence(ModelSQL, ModelView):
     'Account Journal Invoice Sequence'
     __name__ = 'account.journal.invoice.sequence'
-    journal = fields.Many2One('account.journal', 'Journal', required=True)
+    journal = fields.Many2One('account.journal', 'Journal', required=True,
+        context={
+            'company': Eval('company'),
+            },
+        depends=['company'])
     fiscalyear = fields.Many2One('account.fiscalyear', 'Fiscalyear',
         required=True, domain=[
             ('company', '=', Eval('company', -1)),
@@ -190,4 +194,3 @@ class Invoice(metaclass=PoolMeta):
                     invoice.invoice_date = Transaction().context['date']
         cls.save(invoices)
         return super(Invoice, cls).set_number(invoices)
-
