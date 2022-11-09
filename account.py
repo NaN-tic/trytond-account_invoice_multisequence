@@ -30,7 +30,7 @@ class AccountJournalInvoiceSequence(ModelSQL, ModelView):
         domain=[
             ('id', If(Eval('context', {}).contains('company'), '=', '!='),
                 Eval('context', {}).get('company', -1)),
-            ], select=True)
+            ])
     type = fields.Function(fields.Char('Type'), 'on_change_with_type')
     out_invoice_sequence = fields.Many2One('ir.sequence.strict',
         'Customer Invoice Sequence',
