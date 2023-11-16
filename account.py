@@ -15,7 +15,7 @@ class AccountJournalInvoiceSequence(ModelSQL, ModelView):
     __name__ = 'account.journal.invoice.sequence'
     journal = fields.Many2One('account.journal', 'Journal', required=True,
         context={
-            'company': Eval('company'),
+            'company': Eval('company', -1),
             },
         depends=['company'])
     fiscalyear = fields.Many2One('account.fiscalyear', 'Fiscalyear',
@@ -42,7 +42,7 @@ class AccountJournalInvoiceSequence(ModelSQL, ModelView):
             ('sequence_type', '=', Id('account_invoice',
                     'sequence_type_account_invoice')),
             ['OR',
-                ('company', '=', Eval('company')),
+                ('company', '=', Eval('company', -1)),
                 ('company', '=', None),
                 ]
             ],
@@ -57,7 +57,7 @@ class AccountJournalInvoiceSequence(ModelSQL, ModelView):
             ('sequence_type', '=', Id('account_invoice',
                     'sequence_type_account_invoice')),
             ['OR',
-                ('company', '=', Eval('company')),
+                ('company', '=', Eval('company', -1)),
                 ('company', '=', None),
                 ]
             ],
@@ -72,7 +72,7 @@ class AccountJournalInvoiceSequence(ModelSQL, ModelView):
             ('sequence_type', '=', Id('account_invoice',
                     'sequence_type_account_invoice')),
             ['OR',
-                ('company', '=', Eval('company')),
+                ('company', '=', Eval('company', -1)),
                 ('company', '=', None),
                 ]
             ],
@@ -87,7 +87,7 @@ class AccountJournalInvoiceSequence(ModelSQL, ModelView):
             ('sequence_type', '=', Id('account_invoice',
                     'sequence_type_account_invoice')),
             ['OR',
-                ('company', '=', Eval('company')),
+                ('company', '=', Eval('company', -1)),
                 ('company', '=', None),
                 ]
             ],
