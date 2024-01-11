@@ -45,8 +45,7 @@ class AccountJournalInvoiceSequence(ModelSQL, ModelView):
                 ('company', '=', Eval('company', -1)),
                 ('company', '=', None),
                 ]
-            ],
-        depends=['company', 'type'])
+            ])
     out_credit_note_sequence = fields.Many2One('ir.sequence.strict',
         'Customer Credit Note Sequence',
         states={
@@ -60,8 +59,7 @@ class AccountJournalInvoiceSequence(ModelSQL, ModelView):
                 ('company', '=', Eval('company', -1)),
                 ('company', '=', None),
                 ]
-            ],
-        depends=['company', 'type'])
+            ])
     in_invoice_sequence = fields.Many2One('ir.sequence.strict',
         'Supplier Invoice Sequence',
         states={
@@ -75,8 +73,7 @@ class AccountJournalInvoiceSequence(ModelSQL, ModelView):
                 ('company', '=', Eval('company', -1)),
                 ('company', '=', None),
                 ]
-            ],
-        depends=['company', 'type'])
+            ])
     in_credit_note_sequence = fields.Many2One('ir.sequence.strict',
         'Supplier Credit Note Sequence',
         states={
@@ -90,8 +87,7 @@ class AccountJournalInvoiceSequence(ModelSQL, ModelView):
                 ('company', '=', Eval('company', -1)),
                 ('company', '=', None),
                 ]
-            ],
-        depends=['company', 'type'])
+            ])
 
     @classmethod
     def __setup__(cls):
