@@ -21,11 +21,11 @@ class AccountJournalInvoiceSequence(ModelSQL, ModelView):
     fiscalyear = fields.Many2One('account.fiscalyear', 'Fiscalyear',
         required=True, domain=[
             ('company', '=', Eval('company', -1)),
-            ], depends=['company'])
+            ])
     period = fields.Many2One('account.period', 'Period',
         domain=[
             ('fiscalyear', '=', Eval('fiscalyear'))
-            ], depends=['fiscalyear'])
+            ])
     company = fields.Many2One('company.company', 'Company', required=True,
         domain=[
             ('id', If(Eval('context', {}).contains('company'), '=', '!='),
