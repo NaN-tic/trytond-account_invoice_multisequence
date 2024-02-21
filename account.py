@@ -35,6 +35,9 @@ class AccountJournalInvoiceSequence(ModelSQL, ModelView):
     type = fields.Function(fields.Char('Type'), 'on_change_with_type')
     out_invoice_sequence = fields.Many2One('ir.sequence.strict',
         'Customer Invoice Sequence',
+        states={'required': Eval('type') == 'revenue',
+                'invisible': Eval('type') != 'revenue',
+                },
         domain=[
             ('sequence_type', '=', Id('account_invoice',
                     'sequence_type_account_invoice')),
@@ -179,10 +182,10 @@ class Invoice(metaclass=PoolMeta):
                     invoice.invoice_date = Transaction().context['date']
         cls.save(invoices)
         return super(Invoice, cls).set_number(invoices)
-    
+
 class RenewFiscalYear(metaclass=PoolMeta):
     __name__ = 'account.fiscalyear.renew'
-    
+
     def fiscalyear_defaults(self):
         defaults = super(RenewFiscalYear, self).fiscalyear_defaults()
         defaults['invoice_sequences'] = None
@@ -202,7 +205,7 @@ class RenewFiscalYear(metaclass=PoolMeta):
 
         if not self.start.reset_sequences:
             return fiscalyear
-        
+
         sequences = OrderedDict()
         for invoice_sequence in fiscalyear.journal_sequences:
             for field in self.invoice_sequence_fields:
@@ -216,7 +219,7 @@ class RenewFiscalYear(metaclass=PoolMeta):
                 })
         Sequence.write(copies, {
                 'number_next': Sequence.default_number_next(),
-                })      
+                })
         mapping = {}
         for previous_id, new_sequence in zip(sequences.keys(), copies):
             mapping[previous_id] = new_sequence.id
