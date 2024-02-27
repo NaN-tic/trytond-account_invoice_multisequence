@@ -228,3 +228,21 @@ Create credit_note IN on custom journal::
     >>> invoice.click('post')
     >>> invoice.number
     'C2'
+
+Set the sequence number::
+
+    >>> sequence = fiscalyear.post_move_sequence
+    >>> sequence.number_next = 10
+    >>> sequence.save()
+
+Renew fiscalyear using the wizard::
+
+    >>> renew_fiscalyear = Wizard('account.fiscalyear.renew')
+    >>> renew_fiscalyear.form.reset_sequences = False
+    >>> renew_fiscalyear.execute('create_')
+    >>> new_fiscalyear, = renew_fiscalyear.actions[0]
+    >>> len(new_fiscalyear.periods)
+    12
+    >>> int(new_fiscalyear.post_move_sequence.number_next)
+    10
+
