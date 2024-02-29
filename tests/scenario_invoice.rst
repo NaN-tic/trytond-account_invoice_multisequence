@@ -33,6 +33,7 @@ Create fiscal year::
     ...     create_fiscalyear(company))
     >>> fiscalyear.click('create_period')
     >>> period = fiscalyear.periods[0]
+    >>> fiscalyear.save()
 
 Create chart of accounts::
 
@@ -237,6 +238,10 @@ Set the sequence number::
 
 Renew fiscalyear using the wizard::
 
+    >>> Fiscal_year = Model.get('account.fiscalyear')
+    >>> fiscal_years = len(Fiscal_year.find([]))
+    >>> fiscal_years
+    1
     >>> renew_fiscalyear = Wizard('account.fiscalyear.renew')
     >>> renew_fiscalyear.form.reset_sequences = False
     >>> renew_fiscalyear.execute('create_')
@@ -245,4 +250,10 @@ Renew fiscalyear using the wizard::
     12
     >>> int(new_fiscalyear.post_move_sequence.number_next)
     10
-
+    >>> fiscal_years = len(Fiscal_year.find([]))
+    >>> fiscal_years
+    2
+    >>> new_fiscal_year = Fiscal_year.find(["id", "=", 2])[0]
+    >>> new_sequences = new_fiscal_year.journal_sequences[0].id, new_fiscal_year.journal_sequences[1].id
+    >>> str(new_sequences)
+    '(3, 4)'
