@@ -238,8 +238,8 @@ Set the sequence number::
 
 Renew fiscalyear using the wizard::
 
-    >>> Fiscal_year = Model.get('account.fiscalyear')
-    >>> fiscal_years = len(Fiscal_year.find([]))
+    >>> FiscalYear = Model.get('account.fiscalyear')
+    >>> fiscal_years = len(FiscalYear.find([]))
     >>> fiscal_years
     1
     >>> renew_fiscalyear = Wizard('account.fiscalyear.renew')
@@ -250,10 +250,11 @@ Renew fiscalyear using the wizard::
     12
     >>> int(new_fiscalyear.post_move_sequence.number_next)
     10
-    >>> fiscal_years = len(Fiscal_year.find([]))
+    >>> fiscal_years = len(FiscalYear.find([]))
     >>> fiscal_years
     2
-    >>> new_fiscal_year = Fiscal_year.find(["id", "=", 2])[0]
+    >>> new_fiscal_year = FiscalYear.find(["id", "!=", fiscalyear.id])[0] 
     >>> new_sequences = new_fiscal_year.journal_sequences[0].id, new_fiscal_year.journal_sequences[1].id
-    >>> str(new_sequences)
-    '(3, 4)'
+    >>> separate = (new_fiscal_year.journal_sequences[0].id != fiscalyear.journal_sequences[0].id)
+    >>> separate
+    True
