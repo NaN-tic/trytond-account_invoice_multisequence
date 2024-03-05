@@ -11,3 +11,7 @@ def register():
         account.FiscalYear,
         account.Invoice,
         module='account_invoice_multisequence', type_='model')
+    Pool.register(
+        account.RenewFiscalYear,
+        module="account_invoice_multisequence", type_='wizard')
+

@@ -1,6 +1,7 @@
 # This file is part of the account_invoice_multisequence module for Tryton.
 # The COPYRIGHT file at the top level of this repository contains the full
 # copyright notices and license terms.
+from collections import OrderedDict
 from decimal import Decimal
 from trytond.model import ModelView, ModelSQL, fields, Unique
 from trytond.pool import Pool, PoolMeta
@@ -34,10 +35,9 @@ class AccountJournalInvoiceSequence(ModelSQL, ModelView):
     type = fields.Function(fields.Char('Type'), 'on_change_with_type')
     out_invoice_sequence = fields.Many2One('ir.sequence.strict',
         'Customer Invoice Sequence',
-        states={
-            'required': Eval('type') == 'revenue',
-            'invisible': Eval('type') != 'revenue',
-            },
+        states={'required': Eval('type') == 'revenue',
+                'invisible': Eval('type') != 'revenue',
+                },
         domain=[
             ('sequence_type', '=', Id('account_invoice',
                     'sequence_type_account_invoice')),
@@ -48,10 +48,6 @@ class AccountJournalInvoiceSequence(ModelSQL, ModelView):
             ])
     out_credit_note_sequence = fields.Many2One('ir.sequence.strict',
         'Customer Credit Note Sequence',
-        states={
-            'required': Eval('type') == 'revenue',
-            'invisible': Eval('type') != 'revenue',
-            },
         domain=[
             ('sequence_type', '=', Id('account_invoice',
                     'sequence_type_account_invoice')),
@@ -62,10 +58,6 @@ class AccountJournalInvoiceSequence(ModelSQL, ModelView):
             ])
     in_invoice_sequence = fields.Many2One('ir.sequence.strict',
         'Supplier Invoice Sequence',
-        states={
-            'required': Eval('type') == 'expense',
-            'invisible': Eval('type') != 'expense',
-            },
         domain=[
             ('sequence_type', '=', Id('account_invoice',
                     'sequence_type_account_invoice')),
@@ -76,10 +68,6 @@ class AccountJournalInvoiceSequence(ModelSQL, ModelView):
             ])
     in_credit_note_sequence = fields.Many2One('ir.sequence.strict',
         'Supplier Credit Note Sequence',
-        states={
-            'required': Eval('type') == 'expense',
-            'invisible': Eval('type') != 'expense',
-            },
         domain=[
             ('sequence_type', '=', Id('account_invoice',
                     'sequence_type_account_invoice')),
@@ -190,3 +178,56 @@ class Invoice(metaclass=PoolMeta):
                     invoice.invoice_date = Transaction().context['date']
         cls.save(invoices)
         return super(Invoice, cls).set_number(invoices)
+
+class RenewFiscalYear(metaclass=PoolMeta):
+    __name__ = 'account.fiscalyear.renew'
+
+    def fiscalyear_defaults(self):
+        defaults = super(RenewFiscalYear, self).fiscalyear_defaults()
+        defaults['invoice_sequences'] = None
+        return defaults
+
+    @property
+    def invoice_sequence_fields(self):
+        return ['out_invoice_sequence', 'out_credit_note_sequence',
+            'in_invoice_sequence', 'in_credit_note_sequence']
+
+    def create_fiscalyear(self):
+        pool = Pool()
+        Sequence = pool.get('ir.sequence.strict')
+        InvoiceSequence = pool.get('account.journal.invoice.sequence')
+
+        fiscalyear = super().create_fiscalyear()
+
+        if not self.start.reset_sequences:
+            return fiscalyear
+
+        sequences = OrderedDict()
+        for invoice_sequence in fiscalyear.journal_sequences:
+            for field in self.invoice_sequence_fields:
+                sequence = getattr(invoice_sequence, field, None)
+                if sequence:
+                    sequences[sequence.id] = sequence
+        copies = Sequence.copy(list(sequences.values()), default={
+                'name': lambda data: data['name'].replace(
+                    self.start.previous_fiscalyear.name,
+                    self.start.name)
+                })
+        Sequence.write(copies, {
+                'number_next': Sequence.default_number_next(),
+                })
+        mapping = {}
+        for previous_id, new_sequence in zip(sequences.keys(), copies):
+            mapping[previous_id] = new_sequence.id
+        to_write = []
+        for new_sequence, old_sequence in zip(
+                fiscalyear.journal_sequences,
+                self.start.previous_fiscalyear.journal_sequences):
+            values = {}
+            for field in self.invoice_sequence_fields:
+                sequence = getattr(old_sequence, field, None)
+                values[field] = mapping[sequence.id]
+            to_write.extend(([new_sequence], values))
+        if to_write:
+            InvoiceSequence.write(*to_write)
+        return fiscalyear
