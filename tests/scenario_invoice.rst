@@ -33,6 +33,7 @@ Create fiscal year::
     ...     create_fiscalyear(company))
     >>> fiscalyear.click('create_period')
     >>> period = fiscalyear.periods[0]
+    >>> fiscalyear.save()
 
 Create chart of accounts::
 
@@ -228,3 +229,32 @@ Create credit_note IN on custom journal::
     >>> invoice.click('post')
     >>> invoice.number
     'C2'
+
+Set the sequence number::
+
+    >>> sequence = fiscalyear.post_move_sequence
+    >>> sequence.number_next = 10
+    >>> sequence.save()
+
+Renew fiscalyear using the wizard::
+
+    >>> FiscalYear = Model.get('account.fiscalyear')
+    >>> fiscal_years = len(FiscalYear.find([]))
+    >>> fiscal_years
+    1
+    >>> renew_fiscalyear = Wizard('account.fiscalyear.renew')
+    >>> renew_fiscalyear.form.reset_sequences = False
+    >>> renew_fiscalyear.execute('create_')
+    >>> new_fiscalyear, = renew_fiscalyear.actions[0]
+    >>> len(new_fiscalyear.periods)
+    12
+    >>> int(new_fiscalyear.post_move_sequence.number_next)
+    10
+    >>> fiscal_years = len(FiscalYear.find([]))
+    >>> fiscal_years
+    2
+    >>> new_fiscal_year = FiscalYear.find(["id", "!=", fiscalyear.id])[0] 
+    >>> new_sequences = new_fiscal_year.journal_sequences[0].id, new_fiscal_year.journal_sequences[1].id
+    >>> separate = (new_fiscal_year.journal_sequences[0].id != fiscalyear.journal_sequences[0].id)
+    >>> separate
+    True
