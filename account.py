@@ -8,7 +8,7 @@ from trytond.pool import Pool, PoolMeta
 from trytond.pyson import Eval, If, In, Not, Id
 from trytond.transaction import Transaction
 
-_ZERO = Decimal('0.0')
+_ZERO = Decimal(0)
 
 
 class AccountJournalInvoiceSequence(ModelSQL, ModelView):
