@@ -148,36 +148,19 @@ class FiscalYear(metaclass=PoolMeta):
 class Invoice(metaclass=PoolMeta):
     __name__ = 'account.invoice'
 
-    @classmethod
-    def set_number(cls, invoices):
-        '''
-        Set number to the invoice
-        '''
+    def get_next_number(self, pattern=None):
         pool = Pool()
         Date = pool.get('ir.date')
 
-        # Obtain sequences first and then iterate to compute the number.
-        # The reason is that changing the context in each iteration causes the
-        # invoices cache to be cleared and so untaxed_amount (which is
-        # frequently computed in get_invoice_sequence) is computed in each
-        # iteration. For large invoices this can take a lot of time.
-        sequences = {}
-        for invoice in invoices:
-            if invoice.number:
-                continue
-            sequence = invoice.journal and invoice.journal.get_invoice_sequence(invoice)
-            if sequence:
-                sequences[invoice] = sequence
-
-        for invoice, sequence in sequences.items():
+        sequence = self.journal and self.journal.get_invoice_sequence(self)
+        if sequence:
+            accounting_date = self.accounting_date or self.invoice_date or Date.today()
             with Transaction().set_context(
-                    date=invoice.invoice_date or Date.today()):
-                number = sequence.get()
-                invoice.number = number
-                if not invoice.invoice_date and invoice.type == 'out':
-                    invoice.invoice_date = Transaction().context['date']
-        cls.save(invoices)
-        return super(Invoice, cls).set_number(invoices)
+                    date=accounting_date,
+                    company=self.company.id):
+                return sequence.get(), sequence.id
+        return super().get_next_number(pattern)
+
 
 class RenewFiscalYear(metaclass=PoolMeta):
     __name__ = 'account.fiscalyear.renew'

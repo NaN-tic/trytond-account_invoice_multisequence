@@ -8,6 +8,7 @@ from trytond.modules.account.tests.tools import (create_chart,
                                                  get_accounts)
 from trytond.modules.account_invoice.tests.tools import (
     create_payment_term, set_fiscalyear_invoice_sequences)
+from trytond.modules.account_invoice.exceptions import InvoiceNumberError
 from trytond.modules.company.tests.tools import create_company, get_company
 from trytond.tests.test_tryton import drop_db
 from trytond.tests.tools import activate_modules
@@ -26,6 +27,7 @@ class Test(unittest.TestCase):
     def test(self):
 
         today = datetime.date.today()
+        yestarday = today - datetime.timedelta(days=1)
 
         # Install account_invoice_multisequence
         activate_modules('account_invoice_multisequence')
@@ -167,6 +169,19 @@ class Test(unittest.TestCase):
         line.unit_price = Decimal('40')
         invoice.click('post')
         self.assertEqual(invoice.number, '1')
+
+        # not allow to post an invoice that invoice date is before to other invoice
+        invoice = Invoice()
+        invoice.party = party
+        invoice.invoice_date = yestarday
+        invoice.journal = journal_revenue_custom
+        invoice.payment_term = payment_term
+        line = invoice.lines.new()
+        line.product = product
+        line.quantity = 5
+        line.unit_price = Decimal('40')
+        with self.assertRaises(InvoiceNumberError):
+            invoice.click('post')
 
         # Create credit_note on custom journal
         Invoice = Model.get('account.invoice')
