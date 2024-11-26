@@ -230,6 +230,8 @@ class RenewFiscalYear(metaclass=PoolMeta):
             values = {}
             for field in self.invoice_sequence_fields:
                 sequence = getattr(old_sequence, field, None)
+                if not sequence:
+                    continue
                 values[field] = mapping[sequence.id]
             to_write.extend(([new_sequence], values))
         if to_write:
