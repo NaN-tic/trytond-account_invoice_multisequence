@@ -154,9 +154,8 @@ class Invoice(metaclass=PoolMeta):
 
         sequence = self.journal and self.journal.get_invoice_sequence(self)
         if sequence:
-            accounting_date = self.accounting_date or self.invoice_date or Date.today()
             with Transaction().set_context(
-                    date=accounting_date,
+                    date=self.invoice_date or Date.today(),
                     company=self.company.id):
                 return sequence.get(), sequence.id
         return super().get_next_number(pattern)
