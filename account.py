@@ -148,17 +148,18 @@ class FiscalYear(metaclass=PoolMeta):
 class Invoice(metaclass=PoolMeta):
     __name__ = 'account.invoice'
 
-    def get_next_number(self, pattern=None):
+    def _number_sequence(self, pattern=None):
         pool = Pool()
         Date = pool.get('ir.date')
 
         sequence = self.journal and self.journal.get_invoice_sequence(self)
+        accounting_date = self.accounting_date or self.invoice_date or Date.today()
         if sequence:
             with Transaction().set_context(
-                    date=self.invoice_date or Date.today(),
+                    date=accounting_date,
                     company=self.company.id):
-                return sequence.get(), sequence.id
-        return super().get_next_number(pattern)
+                return sequence, accounting_date
+        return super()._number_sequence(pattern)
 
 
 class RenewFiscalYear(metaclass=PoolMeta):
