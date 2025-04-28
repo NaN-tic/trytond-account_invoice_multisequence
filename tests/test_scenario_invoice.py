@@ -59,8 +59,6 @@ class Test(unittest.TestCase):
         SequenceStrict = Model.get('ir.sequence.strict')
         Sequence = Model.get('ir.sequence')
         SequenceType = Model.get('ir.sequence.type')
-        sequence_journal, = Sequence.find([('sequence_type.name', '=',
-                                            'Account Journal')])
         sequence_type, = SequenceType.find([('name', '=', 'Invoice')])
         invoice_seq = SequenceStrict(name=fiscalyear.name,
                                      sequence_type=sequence_type,
@@ -73,9 +71,7 @@ class Test(unittest.TestCase):
                                             company=company)
         invoice_credit_seq.save()
         journal_revenue, = Journal.find([('type', '=', 'revenue')])
-        journal_revenue_custom = Journal(type='revenue',
-                                         name='Custom Revenue',
-                                         sequence=sequence_journal)
+        journal_revenue_custom = Journal(type='revenue', name='Custom Revenue')
         journal_revenue_custom.save()
         out_sequence = AccountJournalInvoiceSequence()
         out_sequence.journal = journal_revenue_custom
@@ -84,9 +80,7 @@ class Test(unittest.TestCase):
         out_sequence.out_credit_note_sequence = invoice_credit_seq
         out_sequence.save()
         journal_expense, = Journal.find([('type', '=', 'expense')])
-        journal_expense_custom = Journal(type='expense',
-                                         name='Custom Expense',
-                                         sequence=sequence_journal)
+        journal_expense_custom = Journal(type='expense', name='Custom Expense')
         journal_expense_custom.save()
         in_sequence = AccountJournalInvoiceSequence()
         in_sequence.journal = journal_expense_custom
@@ -228,7 +222,7 @@ class Test(unittest.TestCase):
         self.assertEqual(invoice.number, 'C2')
 
         # Set the sequence number
-        sequence = fiscalyear.post_move_sequence
+        sequence = fiscalyear.move_sequence
         sequence.number_next = 10
         sequence.save()
 
@@ -241,7 +235,7 @@ class Test(unittest.TestCase):
         renew_fiscalyear.execute('create_')
         new_fiscalyear, = renew_fiscalyear.actions[0]
         self.assertEqual(len(new_fiscalyear.periods), 12)
-        self.assertEqual(int(new_fiscalyear.post_move_sequence.number_next), 10)
+        self.assertEqual(int(new_fiscalyear.move_sequence.number_next), 10)
         fiscal_years = len(FiscalYear.find([]))
         self.assertEqual(fiscal_years, 2)
         new_fiscal_year = FiscalYear.find(["id", "!=", fiscalyear.id])[0]
