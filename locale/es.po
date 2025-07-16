@@ -2,10 +2,6 @@
 msgid ""
 msgstr "Content-Type: text/plain; charset=utf-8\n"
 
-msgctxt "error:account.journal.invoice.sequence:"
-msgid "Period can be used only once per Journal Sequence."
-msgstr "El período sólo se puede usar una vez en las secuencias de diario."
-
 msgctxt "field:account.fiscalyear,journal_sequences:"
 msgid "Journal Sequences"
 msgstr "Secuencias de diario"
