@@ -126,7 +126,7 @@ class Test(unittest.TestCase):
 
         # Create invoice on revenue journal
         Invoice = Model.get('account.invoice')
-        invoice = Invoice()
+        invoice = Invoice(type='out')
         invoice.party = party
         invoice.journal = journal_revenue
         invoice.payment_term = payment_term
@@ -139,7 +139,7 @@ class Test(unittest.TestCase):
 
         # Create credit_note on revenue journal
         Invoice = Model.get('account.invoice')
-        invoice = Invoice()
+        invoice = Invoice(type='out')
         invoice.party = party
         invoice.journal = journal_revenue
         invoice.payment_term = payment_term
@@ -152,7 +152,7 @@ class Test(unittest.TestCase):
 
         # Create invoice on custom journal
         Invoice = Model.get('account.invoice')
-        invoice = Invoice()
+        invoice = Invoice(type='out')
         invoice.party = party
         invoice.invoice_date = today
         invoice.journal = journal_revenue_custom
@@ -165,7 +165,7 @@ class Test(unittest.TestCase):
         self.assertEqual(invoice.number, '1')
 
         # not allow to post an invoice that invoice date is before to other invoice
-        invoice = Invoice()
+        invoice = Invoice(type='out')
         invoice.party = party
         invoice.invoice_date = yestarday
         invoice.journal = journal_revenue_custom
@@ -179,7 +179,7 @@ class Test(unittest.TestCase):
 
         # Create credit_note on custom journal
         Invoice = Model.get('account.invoice')
-        invoice = Invoice()
+        invoice = Invoice(type='out')
         invoice.party = party
         invoice.invoice_date = today
         invoice.journal = journal_revenue_custom
