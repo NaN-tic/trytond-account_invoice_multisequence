@@ -1,0 +1,88 @@
+#
+msgid ""
+msgstr ""
+"Language: zh_CN\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+msgctxt "field:account.fiscalyear,journal_sequences:"
+msgid "Journal Sequences"
+msgstr "日记账编号序列"
+
+msgctxt "field:account.journal.invoice.sequence,company:"
+msgid "Company"
+msgstr "公司"
+
+msgctxt "field:account.journal.invoice.sequence,create_date:"
+msgid "Create Date"
+msgstr "创建日期"
+
+msgctxt "field:account.journal.invoice.sequence,create_uid:"
+msgid "Create User"
+msgstr "创建用户"
+
+msgctxt "field:account.journal.invoice.sequence,fiscalyear:"
+msgid "Fiscalyear"
+msgstr "会计年度"
+
+msgctxt "field:account.journal.invoice.sequence,id:"
+msgid "ID"
+msgstr "ID"
+
+msgctxt "field:account.journal.invoice.sequence,in_invoice_sequence:"
+msgid "Supplier Invoice Sequence"
+msgstr "供应商原始凭证序列"
+
+msgctxt "field:account.journal.invoice.sequence,in_credit_note_sequence:"
+msgid "Supplier Credit Note Sequence"
+msgstr "供应商补款单序列"
+
+msgctxt "field:account.journal.invoice.sequence,journal:"
+msgid "Journal"
+msgstr "日记账"
+
+msgctxt "field:account.journal.invoice.sequence,out_credit_note_sequence:"
+msgid "Customer Credit Note Sequence"
+msgstr "客户补款单序列"
+
+msgctxt "field:account.journal.invoice.sequence,out_invoice_sequence:"
+msgid "Customer Invoice Sequence"
+msgstr "客户原始凭证序列"
+
+msgctxt "field:account.journal.invoice.sequence,period:"
+msgid "Period"
+msgstr "分期"
+
+msgctxt "field:account.journal.invoice.sequence,rec_name:"
+msgid "Name"
+msgstr "名称"
+
+msgctxt "field:account.journal.invoice.sequence,type:"
+msgid "Type"
+msgstr "科目"
+
+msgctxt "field:account.journal.invoice.sequence,write_date:"
+msgid "Write Date"
+msgstr "修改日期"
+
+msgctxt "field:account.journal.invoice.sequence,write_uid:"
+msgid "Write User"
+msgstr "修改用户"
+
+msgctxt "model:account.journal.invoice.sequence,name:"
+msgid "Account Journal Invoice Sequence"
+msgstr "日记账发票编号序列"
+
+msgctxt "view:account.journal.invoice.sequence:"
+msgid "Account Invoice Sequence"
+msgstr "发票编号序列"
+
+msgctxt "model:account.journal.invoice.sequence,string:"
+msgid "Account Journal Invoice Sequence"
+msgstr "日记账发票编号序列"
+
+msgctxt "model:ir.rule.group,name:rule_group_account_journal_invoice_sequence"
+msgid "Account Journal Invoice Sequence"
+msgstr "日记账发票编号序列"
