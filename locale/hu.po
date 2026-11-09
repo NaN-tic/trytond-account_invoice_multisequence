@@ -1,0 +1,88 @@
+#
+msgid ""
+msgstr ""
+"Language: hu\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "field:account.fiscalyear,journal_sequences:"
+msgid "Journal Sequences"
+msgstr "Naplók sorszámsorozatai"
+
+msgctxt "field:account.journal.invoice.sequence,company:"
+msgid "Company"
+msgstr "Cég"
+
+msgctxt "field:account.journal.invoice.sequence,create_date:"
+msgid "Create Date"
+msgstr "Létrehozás dátuma"
+
+msgctxt "field:account.journal.invoice.sequence,create_uid:"
+msgid "Create User"
+msgstr "Létrehozó felhasználó"
+
+msgctxt "field:account.journal.invoice.sequence,fiscalyear:"
+msgid "Fiscalyear"
+msgstr "Üzleti év"
+
+msgctxt "field:account.journal.invoice.sequence,id:"
+msgid "ID"
+msgstr "Azonosító"
+
+msgctxt "field:account.journal.invoice.sequence,in_invoice_sequence:"
+msgid "Supplier Invoice Sequence"
+msgstr "Szállítói számla sorszámsorozata"
+
+msgctxt "field:account.journal.invoice.sequence,in_credit_note_sequence:"
+msgid "Supplier Credit Note Sequence"
+msgstr "Szállítói jóváírás sorszámsorozata"
+
+msgctxt "field:account.journal.invoice.sequence,journal:"
+msgid "Journal"
+msgstr "Napló"
+
+msgctxt "field:account.journal.invoice.sequence,out_credit_note_sequence:"
+msgid "Customer Credit Note Sequence"
+msgstr "Vevői jóváírás sorszámsorozata"
+
+msgctxt "field:account.journal.invoice.sequence,out_invoice_sequence:"
+msgid "Customer Invoice Sequence"
+msgstr "Vevői számla sorszámsorozata"
+
+msgctxt "field:account.journal.invoice.sequence,period:"
+msgid "Period"
+msgstr "Periódus"
+
+msgctxt "field:account.journal.invoice.sequence,rec_name:"
+msgid "Name"
+msgstr "Név"
+
+msgctxt "field:account.journal.invoice.sequence,type:"
+msgid "Type"
+msgstr "Típus"
+
+msgctxt "field:account.journal.invoice.sequence,write_date:"
+msgid "Write Date"
+msgstr "Módosítás dátuma"
+
+msgctxt "field:account.journal.invoice.sequence,write_uid:"
+msgid "Write User"
+msgstr "Módosító felhasználó"
+
+msgctxt "model:account.journal.invoice.sequence,name:"
+msgid "Account Journal Invoice Sequence"
+msgstr "Napló számlasorszámsorozata"
+
+msgctxt "view:account.journal.invoice.sequence:"
+msgid "Account Invoice Sequence"
+msgstr "Számla sorszámsorozata"
+
+msgctxt "model:account.journal.invoice.sequence,string:"
+msgid "Account Journal Invoice Sequence"
+msgstr "Napló számlasorszámsorozata"
+
+msgctxt "model:ir.rule.group,name:rule_group_account_journal_invoice_sequence"
+msgid "Account Journal Invoice Sequence"
+msgstr "Napló számlasorszámsorozata"
